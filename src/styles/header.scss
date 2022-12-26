@@ -1,0 +1,68 @@
+@import "colors";
+
+nav {
+    height: 5rem;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.229);
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    >div {
+        display: flex;
+        align-items: center;
+
+        >svg {
+            color: $red;
+            font-size: 3rem;
+        }
+
+        >a {
+            margin: 0 2rem;
+            color: $dark;
+            transition: color 0.3s;
+
+            &:hover {
+                color: $lightdark;
+            }
+
+            >svg {
+                color: $red;
+                transition: inherit;
+                font-size: 1.5rem;
+
+                &:hover {
+                    color: $lightdark;
+                }
+            }
+        }
+    }
+
+    // close main
+}
+
+
+@media screen and (max-width: 640px) {
+    nav {
+        padding: 0 1rem;
+
+        >div>a {
+            margin: 0 0.5rem;
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    nav {
+        bottom: 0;
+        top: unset;
+        border-top-right-radius: 30px;
+        border-top-left-radius: 30px;
+    }
+}

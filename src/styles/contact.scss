@@ -1,0 +1,43 @@
+@import "colors";
+
+
+.contact {
+    width: 100%;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    background-image: url("../assets/bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    >form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 280px;
+        padding: 1rem;
+        background-color: #fff;
+
+        >input,
+        >textarea {
+            width: 100%;
+            border: 1px solid $dark;
+            border-radius: 5px;
+            outline: none;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .contact {
+        width: 100%;
+        height: calc(100vh - 80px);
+        margin-top: 0;
+    }
+}
