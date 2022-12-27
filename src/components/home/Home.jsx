@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import Founder from "./Founder";
 import Menu from "./Menu";
-import Footer from "../layout/Footer";
 
 const Home = () => {
   const animationOptions = {
@@ -38,10 +37,6 @@ const Home = () => {
       {/* MENU START */}
       <Menu />
       {/* MENU ENDS */}
-
-      {/* FOOTER START */}
-      <Footer />
-      {/* FOOTER ENDS */}
     </>
   );
 };
