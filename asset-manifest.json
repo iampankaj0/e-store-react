@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/e-store-react/static/css/main.dfa845b7.css",
-    "main.js": "/e-store-react/static/js/main.9258d363.js",
+    "main.css": "/e-store-react/static/css/main.0844492b.css",
+    "main.js": "/e-store-react/static/js/main.92173a92.js",
     "static/media/burger3.png": "/e-store-react/static/media/burger3.11eccfcb1a45834ac9d7.png",
     "static/media/burger2.png": "/e-store-react/static/media/burger2.3a02b94cd44d825ebb94.png",
     "static/media/bg.png": "/e-store-react/static/media/bg.e25df216162c9b2fc988.png",
     "static/media/burger1.png": "/e-store-react/static/media/burger1.6cbf3dc63aff1ced8e98.png",
+    "static/media/done.gif": "/e-store-react/static/media/done.ab7f88146046c516df19.gif",
     "static/media/profile.jpg": "/e-store-react/static/media/profile.6c83ff1f74ba5766c124.jpg",
     "static/media/bg.svg": "/e-store-react/static/media/bg.e53655d9837b2c7792a3.svg",
     "index.html": "/e-store-react/index.html",
-    "main.dfa845b7.css.map": "/e-store-react/static/css/main.dfa845b7.css.map",
-    "main.9258d363.js.map": "/e-store-react/static/js/main.9258d363.js.map"
+    "main.0844492b.css.map": "/e-store-react/static/css/main.0844492b.css.map",
+    "main.92173a92.js.map": "/e-store-react/static/js/main.92173a92.js.map"
   },
   "entrypoints": [
-    "static/css/main.dfa845b7.css",
-    "static/js/main.9258d363.js"
+    "static/css/main.0844492b.css",
+    "static/js/main.92173a92.js"
   ]
 }
