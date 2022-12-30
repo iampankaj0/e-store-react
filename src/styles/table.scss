@@ -1,0 +1,144 @@
+@import "colors";
+
+
+.tableClass {
+    background-color: $pink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    >main {
+        margin: 15px;
+        padding: 1rem 15px;
+        background-color: #fff;
+        border-radius: 5px;
+        width: 100%;
+
+        >table {
+            width: 100%;
+            align-items: center;
+            border-collapse: separate;
+
+            thead>tr {
+                color: #fff;
+                background-color: #000;
+            }
+
+            tr {
+                background-color: whitesmoke;
+            }
+
+            th {
+                white-space: nowrap;
+            }
+
+            td>span:first-child {
+                display: none;
+            }
+
+            td,
+            th {
+                padding: 1rem;
+                margin: 1px;
+            }
+
+            td {
+                color: $lightdark;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 100%;
+                }
+
+                a>svg {
+                    color: $reddark;
+                    font-size: 25px;
+                    margin-right: 10px;
+
+                    &:hover {
+                        color: $red;
+                    }
+                }
+
+                button {
+                    border: none;
+                    cursor: pointer;
+                    background-color: transparent;
+                    outline: none;
+
+                    svg {
+                        color: $reddark;
+                        font-size: 25px;
+
+                        &:hover {
+                            color: $red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:575px) {
+    .tableClass {
+
+        >main {
+            margin-top: 100px;
+        }
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+    .tableClass {
+
+        >main {
+            padding: 0;
+            background-color: inherit;
+
+            >table {
+
+                th {
+                    display: none;
+                }
+
+                >tbody {
+                    >tr {
+                        margin-top: 15px;
+                        display: table;
+                        width: 100%;
+                        background-color: #fff;
+
+                        &:first-child {
+                            margin-top: 0;
+                        }
+                    }
+                }
+
+                td {
+                    padding: 0.3rem;
+                    margin: 0;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                td>span:first-child {
+                    margin-right: 2px;
+                    display: block;
+                    // width: 135px;
+                    white-space: nowrap;
+                    font-weight: 500;
+                    color: $red;
+
+                    &:after {
+                        content: ":";
+                    }
+                }
+
+
+            }
+        }
+    }
+}

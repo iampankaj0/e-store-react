@@ -1,0 +1,116 @@
+@import "colors";
+
+.profile {
+    background-color: $pink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    >main {
+        width: 500px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem 15px;
+        padding: 2rem 15px;
+        border-radius: 5px;
+
+        >img {
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        >h5 {
+            font-size: 25px;
+            color: $dark;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        >div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding-bottom: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: Tenor, sans-serif;
+            flex-wrap: wrap;
+
+            >div {
+                margin: 10px;
+                display: flex;
+
+                &:first-child {
+                    >a {
+                        color: $dark;
+                        border-color: $dark;
+                    }
+                }
+                &:last-child {
+                    >a {
+                        color: $red;
+                        border-color: $red;
+                    }
+                }
+
+                >a {
+                    border: 1px solid;
+                    padding: 7px 14px;
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+
+
+                    &:hover {
+                        color: $lightdark;
+                        border-color: $lightdark;
+                    }
+
+                    >svg {
+                        margin-right: 5px;
+                    }
+                }
+
+
+                
+            }
+
+        }
+
+        >button {
+            background-color: $red;
+            color: #fff;
+            border: none;
+            padding: 7px 15px;
+            width: fit-content;
+            border-radius: 5px;
+            font-weight: 500;
+
+            &:hover {
+                background-color: $reddark;
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: 575px) {
+    .profile {
+
+        >main {
+            margin-top: 100px;
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .profile {
+        height: auto;
+
+    }
+}

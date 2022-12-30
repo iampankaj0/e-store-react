@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&family=Tenor+Sans&family=Ubuntu:wght@300;400;500&display=swap');
+@import "colors";
+
 
 body {
     overflow-x: hidden;
@@ -14,4 +16,162 @@ body {
 
 a {
     text-decoration: none;
+}
+
+.notFound {
+    width: 100%;
+    height: 100vh;
+    background-color: $pink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    >main {
+        background-color: #fff;
+        width: 500px;
+        padding: 1rem;
+        margin: 1rem;
+        border-radius: 10px;
+
+        >div {
+            color: $dark;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            height: 100px;
+
+
+            >svg {
+                margin-right: 10px;
+            }
+
+            >h1 {
+                margin-bottom: 0;
+            }
+        }
+
+        >p {
+            text-align: center;
+            color: $lightdark;
+            letter-spacing: 2px;
+        }
+
+        >a {
+            background-color: rgb(156, 0, 60);
+            color: #fff;
+            border: none;
+            padding: 7px 15px;
+            width: -moz-fit-content;
+            width: fit-content;
+            border-radius: 5px;
+            font-weight: 500;
+            display: block;
+            margin: 10px auto 0;
+
+            &:hover {
+                background-color: $reddark;
+            }
+        }
+    }
+
+}
+
+
+// LOADER CSS
+.loader {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $pink;
+
+    >svg{
+        color: $red;
+        font-size: 70px;
+        margin-bottom: 15px;
+    }
+
+    >div{
+        >p{
+            color: $dark;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+
+@media screen and (min-width:575px) {
+    .notFound {
+        >main {
+            margin-top: 100px;
+        }
+    }
+
+    .loader {
+        margin-top: 80px;
+    }
+}
+
+@media screen and (max-width:575px) {
+    .notFound {
+        >main {
+            margin-bottom: 80px;
+        }
+    }
+    .loader {
+        margin-top: -80px;
+    }
+}
+
+
+
+
+// NOT FOUND TRANSFORM ANIMATION
+
+.rotateTransformAnimationIcon {
+    color: $dark;
+    animation: animationHalfRotate 2s infinite;
+}
+
+.hideShowAnimation {
+    opacity: 1;
+    animation: hideShow 1s infinite;
+}
+
+@keyframes animationHalfRotate {
+    33% {
+        color: $red;
+        transform: rotate(30deg);
+    }
+
+    66% {
+        color: $dark;
+    }
+
+    99% {
+        color: $red;
+        transform: rotate(-30deg);
+    }
+}
+
+
+@keyframes hideShow {
+    33% {
+        opacity: 1;
+    }
+
+    66% {
+        opacity: 0;
+    }
+
+    99% {
+        opacity: 1;
+    }
 }

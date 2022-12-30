@@ -1,0 +1,113 @@
+@import "colors";
+
+
+.dashboard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >main {
+        height: 100%;
+        width: 100%;
+        background-color: $pink;
+
+        >article {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            background-color: $dark;
+            padding: 15px;
+            flex-wrap: wrap;
+
+            >div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                height: 150px;
+                width: 150px;
+                border-radius: 100%;
+                background-color: #fff;
+                margin: 10px;
+
+                >h3 {
+                    color: $red;
+                    margin-bottom: 10px;
+                }
+
+                >p {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        >section {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            padding: 1rem 15px;
+
+            >div {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+
+                >a {
+                    background-color: $dark;
+                    color: #fff;
+                    padding: 7px 15px;
+                    border-radius: 5px;
+                    margin: 1rem 0;
+                    border: none;
+
+                    &:hover {
+                        background-color: $red;
+                    }
+                }
+            }
+
+            >aside {
+                flex: 1;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 575px) {
+    .dashboard {
+
+        >main {
+            margin-top: 100px;
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .dashboard {
+
+
+        >main {
+
+            >article {
+                >div {
+                    height: 120px;
+                    width: 120px;
+                }
+
+            }
+
+
+            >section {
+                flex-direction: column;
+
+                >aside {
+                    margin-top: 40px;
+                }
+            }
+        }
+    }
+}
