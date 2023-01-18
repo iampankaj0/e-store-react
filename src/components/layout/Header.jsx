@@ -23,15 +23,22 @@ const Header = ({ isAuthenticated = false }) => {
         </Link>
       </div>
       <div className={openToggle ? "nav_links show-nav_links" : "nav_links"}>
-        <NavLink exact to="/e-store-react">
+        <NavLink onClick={() => setOpenToggle(false)} exact to="/e-store-react">
           Home
         </NavLink>
-        <NavLink to="/contact">Contact</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <NavLink to="/cart">
+        <NavLink onClick={() => setOpenToggle(false)} to="/contact">
+          Contact
+        </NavLink>
+        <NavLink onClick={() => setOpenToggle(false)} to="/about">
+          About
+        </NavLink>
+        <NavLink onClick={() => setOpenToggle(false)} to="/cart">
           <BsCartFill />
         </NavLink>
-        <NavLink to={isAuthenticated ? "/me" : "/login"}>
+        <NavLink
+          onClick={() => setOpenToggle(false)}
+          to={isAuthenticated ? "/me" : "/login"}
+        >
           {isAuthenticated ? <FaUser /> : <FiLogIn />}
         </NavLink>
       </div>
