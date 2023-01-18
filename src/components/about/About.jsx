@@ -20,7 +20,7 @@ const About = () => {
             see all items.
           </p>
 
-          <Link to="/">
+          <Link to="/e-store-react">
             <RiFindReplaceLine />
           </Link>
         </article>

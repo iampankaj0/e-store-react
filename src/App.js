@@ -1,5 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/home/Home";
 import Header from "./components/layout/Header";
@@ -18,7 +20,12 @@ import Orders from "./components/admin/Orders";
 import About from "./components/about/About";
 import Footer from "./components/layout/Footer";
 import NotFound from "./components/layout/NotFound";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser } from "./redux/actions/userAction";
+import { CLEAR_ERROR, CLEAR_MESSAGE } from "./redux/constants/userConstant";
+import { ProtectedRoute } from "protected-route-react";
+// import toast, { Toaster } from "react-hot-toast";
 
 // STYLES
 import "./styles/app.scss";
@@ -38,26 +45,78 @@ import "./styles/table.scss";
 import "./styles/orderDetails.scss";
 import "./styles/dashboard.scss";
 import "./styles/about.scss";
+import ScrollToTop from "./components/layout/ScrollToTop";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  const { isAuthenticated, user, error, message, loading } = useSelector(
+    (state) => state.loadUser
+  );
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({
+        type: CLEAR_ERROR,
+      });
+    }
+    if (!loading && message) {
+      toast.success(message);
+      dispatch({
+        type: CLEAR_MESSAGE,
+      });
+    }
+  }, [dispatch, error, message, loading]);
+
   return (
     <Router>
-      <Header isAuthenticated={true} />
+      <ToastContainer />
+      <Header isAuthenticated={isAuthenticated} />
+      <ScrollToTop />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/e-store-react" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/shipping" element={<Shipping />} />
-        <Route path="/confirmorder" element={<ConfirmOrder />} />
-        <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/me" element={<Profile />} />
-        <Route path="/myorders" element={<MyOrders />} />
-        <Route path="/order/:id" element={<OrderDetails />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/users" element={<Users />} />
-        <Route path="/admin/orders" element={<Orders />} />
         <Route path="/about" element={<About />} />
+
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute isAuthenticated={!isAuthenticated} redirect="/me">
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/me" element={<Profile />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/confirmorder" element={<ConfirmOrder />} />
+          <Route path="/myorders" element={<MyOrders />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
+        </Route>
+
+        <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+
+        <Route
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin"}
+              redirectAdmin="/me"
+            />
+          }
+        >
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/orders" element={<Orders />} />
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>

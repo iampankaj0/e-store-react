@@ -18,29 +18,39 @@ nav {
         display: flex;
         align-items: center;
 
-        >svg {
-            color: $red;
-            font-size: 3rem;
+        >.logo_direct {
+            margin: 0;
+
+            >svg {
+                color: $red;
+                font-size: 3rem;
+            }
         }
+
 
         >a {
             margin: 0 2rem;
             color: $dark;
-            transition: color 0.3s;
+            transition: 0.3s;
 
             &:hover {
                 color: $lightdark;
             }
 
             >svg {
-                color: $red;
+                // color: $red;
                 transition: inherit;
                 font-size: 1.5rem;
 
-                &:hover {
-                    color: $lightdark;
-                }
+                // &:hover {
+                //     color: $lightdark;
+                // }
             }
+        }
+
+        >a.active {
+            color: $red;
+
         }
     }
 
@@ -53,10 +63,19 @@ nav {
         padding: 0 1rem;
 
         >div>a {
-            margin: 0 0.5rem;
+            margin: 0 1rem;
         }
     }
 }
+
+
+
+@media screen and (min-width: 576px) {
+    .nav_toggle_btn {
+        display: none;
+    }
+}
+
 
 @media screen and (max-width: 575px) {
     nav {
@@ -65,4 +84,57 @@ nav {
         border-top-right-radius: 30px;
         border-top-left-radius: 30px;
     }
+
+    nav>div>.logo_direct>svg {
+        font-size: 2rem;
+        // z-index: 11;
+    }
+
+    nav>div.nav_toggle_btn>svg {
+        color: $dark;
+        font-size: 2rem;
+    }
+
+    nav>div.nav_toggle_btn>svg:hover {
+        color: $lightdark;
+    }
+
+
+    nav {
+        transition: 0.4s;
+
+        >.nav_links {
+            position: fixed;
+            bottom: 80px;
+            right: 0;
+            width: 0;
+            height: 250px;
+            background: rgba(33, 33, 33, );
+            // border-top: 1px solid red;
+            z-index: 10;
+            display: block;
+            border-top-right-radius: 30px;
+            border-top-left-radius: 30px;
+            transform: translateY(140%);
+            transition: 0.4s;
+            box-sizing: border-box;
+
+            >a {
+                color: #fff;
+                display: block;
+                font-size: 20px;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+        }
+
+        .show-nav_links {
+            transform: translateY(0%);
+            padding: 10px;
+            width: 100%;
+        }
+    }
+
+
+
 }

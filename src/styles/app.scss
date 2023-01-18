@@ -6,6 +6,10 @@ body {
     overflow-x: hidden;
 }
 
+html {
+    scroll-behavior: none;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -89,14 +93,14 @@ a {
     flex-direction: column;
     background-color: $pink;
 
-    >svg{
+    >svg {
         color: $red;
         font-size: 70px;
         margin-bottom: 15px;
     }
 
-    >div{
-        >p{
+    >div {
+        >p {
             color: $dark;
             font-size: 30px;
             font-weight: 700;
@@ -105,6 +109,20 @@ a {
     }
 }
 
+.red {
+    color: red !important;
+    font-weight: 500;
+}
+
+.green {
+    color: green !important;
+    font-weight: 500;
+}
+
+.yellow {
+    color: rgb(201, 201, 24) !important;
+    font-weight: 500;
+}
 
 
 @media screen and (min-width:575px) {
@@ -125,6 +143,7 @@ a {
             margin-bottom: 80px;
         }
     }
+
     .loader {
         margin-top: -80px;
     }
@@ -134,7 +153,6 @@ a {
 
 
 // NOT FOUND TRANSFORM ANIMATION
-
 .rotateTransformAnimationIcon {
     color: $dark;
     animation: animationHalfRotate 2s infinite;

@@ -1,9 +1,52 @@
-import React from "react";
+import React, { Fragment, useEffect } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { GiArmoredBoomerang } from "react-icons/gi";
+import { useDispatch, useSelector } from "react-redux";
+import { getAdminOrders, processOrder } from "../../redux/actions/orderAction";
+import { toast } from "react-toastify";
+import { CLEAR_ERROR, CLEAR_MESSAGE } from "../../redux/constants/orderConstant";
+import Loader from "../layout/Loader";
 
 const Orders = () => {
+  const dispatch = useDispatch();
+  const { loading, orders, error } = useSelector((state) => state.adminOrders);
+  const {
+    loading: processOrderLoading,
+    message,
+    error: processOrderError,
+  } = useSelector((state) => state.processOrder);
+
+  useEffect(() => {
+    dispatch(getAdminOrders());
+  }, [dispatch, processOrderLoading]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({
+        type: CLEAR_ERROR,
+      });
+    }
+    if (processOrderError) {
+      toast.error(processOrderError);
+      dispatch({
+        type: CLEAR_ERROR,
+      });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({
+        type: CLEAR_MESSAGE,
+      });
+    }
+  }, [dispatch, error, processOrderError, message]);
+
+  const handleProcessOrder = (orderId) => {
+    dispatch(processOrder(orderId));
+  };
+
   const tableHeads = [
     {
       id: 1,
@@ -35,55 +78,90 @@ const Orders = () => {
     },
   ];
 
-  const arr = [1, 2, 3, 4, 5, 6, 7];
-
   return (
-    <section className="tableClass">
-      <main className="container">
-        <table className="table-responsive">
-          <thead>
-            <tr>
-              {tableHeads &&
-                tableHeads.map((item) => <th key={item.id}> {item.name} </th>)}
-            </tr>
-          </thead>
+    <Fragment>
+      {loading === true || processOrderLoading === true ? (
+        <Loader />
+      ) : (
+        <section className="tableClass">
+          <main className="container">
+            <table className="table-responsive">
+              <thead>
+                <tr>
+                  {tableHeads &&
+                    tableHeads.map((item) => (
+                      <th key={item.id}> {item.name} </th>
+                    ))}
+                </tr>
+              </thead>
 
-          <tbody>
-            {arr.map((i) => (
-              <tr key={i}>
-                <td>
-                  <span> {tableHeads[0].name} </span> #sjdgfiuosdg
-                </td>
-                <td>
-                  <span> {tableHeads[1].name} </span> Processing
-                </td>
-                <td>
-                  <span> {tableHeads[2].name} </span> 23
-                </td>
-                <td>
-                  <span> {tableHeads[3].name} </span> ₹ {2380}
-                </td>
-                <td>
-                  <span> {tableHeads[4].name} </span> COD
-                </td>
-                <td>
-                  <span> {tableHeads[5].name} </span> PANKAJ YADAV
-                </td>
-                <td>
-                  <span> {tableHeads[6].name} </span>
-                  <Link to={`/order/${"orderId"}`} title="View Order Details">
-                    <AiOutlineEye />
-                  </Link>
-                  <button title="Change Order Status">
-                    <GiArmoredBoomerang />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </main>
-    </section>
+              <tbody>
+                {orders?.map((ele) => (
+                  <tr key={ele._id}>
+                    <td>
+                      <span> {tableHeads[0].name} </span> #{ele?._id}
+                    </td>
+                    <td>
+                      <span> {tableHeads[1].name} </span>
+                      <p
+                        className={
+                          ele?.orderStatus === "Preparing"
+                            ? "red"
+                            : ele?.orderStatus === "Shipped"
+                            ? "yellow"
+                            : "green"
+                        }
+                        style={{ margin: "0" }}
+                      >
+                        {ele?.orderStatus}
+                      </p>
+                    </td>
+                    <td>
+                      <span> {tableHeads[2].name} </span>{" "}
+                      {ele?.orderItems?.cheeseBurger?.quantity +
+                        ele?.orderItems?.vegCheeseBurger?.quantity +
+                        ele?.orderItems?.burgerWithFries?.quantity}
+                    </td>
+                    <td>
+                      <span> {tableHeads[3].name} </span> ₹ {ele?.totalAmount}
+                    </td>
+                    <td>
+                      <span> {tableHeads[4].name} </span>{" "}
+                      <p
+                        className={
+                          ele?.paymentMethod === "Online" ? "green" : "red"
+                        }
+                        style={{ margin: "0" }}
+                      >
+                        {ele?.paymentMethod}
+                      </p>
+                    </td>
+                    <td>
+                      <span> {tableHeads[5].name} </span> {ele?.user?.name}
+                    </td>
+                    <td>
+                      <span> {tableHeads[6].name} </span>
+                      <Link
+                        to={`/order/${ele?._id}`}
+                        title="View Order Details"
+                      >
+                        <AiOutlineEye />
+                      </Link>
+                      <button
+                        onClick={() => handleProcessOrder(ele?._id)}
+                        title="Change Order Status"
+                      >
+                        <GiArmoredBoomerang />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </main>
+        </section>
+      )}
+    </Fragment>
   );
 };
 

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as chartJS, Tooltip, ArcElement, Legend } from "chart.js";
+import { getAdminStats } from "../../redux/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../layout/Loader";
+import { CLEAR_ERROR } from "../../redux/constants/userConstant";
+import { toast } from "react-toastify";
 
-chartJS.register(Tooltip, ArcElement, Legend)
+chartJS.register(Tooltip, ArcElement, Legend);
 
 const Box = ({ title, value }) => {
   return (
@@ -17,12 +22,32 @@ const Box = ({ title, value }) => {
 };
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { stats, loading, error } = useSelector((state) => state.adminStats);
+
+  useEffect(() => {
+    dispatch(getAdminStats());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({
+        type: CLEAR_ERROR,
+      });
+    }
+  }, [dispatch, error]);
+
   const data = {
     labels: ["Preparing", "Shipped", "Delivered"],
     datasets: [
       {
         label: "# of orders",
-        data: [2, 3, 4],
+        data: [
+          stats?.ordersCount?.preparing,
+          stats?.ordersCount?.shipped,
+          stats?.ordersCount?.delivered,
+        ],
         backgroundColor: [
           "rgba(159,63,176,0.1)",
           "rgba(78,63,176,0.2)",
@@ -35,26 +60,32 @@ const Dashboard = () => {
   };
 
   return (
-    <section className="dashboard">
-      <main>
-        <article>
-          <Box title={"Users"} value={213} />
-          <Box title={"Orders"} value={2156} />
-          <Box title={"Income"} value={213548} />
-        </article>
+    <Fragment>
+      {loading === true ? (
+        <Loader />
+      ) : (
+        <section className="dashboard">
+          <main>
+            <article>
+              <Box title={"Users"} value={stats?.usersCount} />
+              <Box title={"Orders"} value={stats?.ordersCount?.total} />
+              <Box title={"Income"} value={stats?.totalIncome} />
+            </article>
 
-        <section>
-          <div>
-            <Link to="/admin/orders">View Orders</Link>
-            <Link to="/admin/users">View Users</Link>
-          </div>
+            <section>
+              <div>
+                <Link to="/admin/orders">View Orders</Link>
+                <Link to="/admin/users">View Users</Link>
+              </div>
 
-          <aside>
-            <Doughnut data={data} />
-          </aside>
+              <aside>
+                <Doughnut data={data} />
+              </aside>
+            </section>
+          </main>
         </section>
-      </main>
-    </section>
+      )}
+    </Fragment>
   );
 };
 

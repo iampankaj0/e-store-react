@@ -13,11 +13,13 @@
         background-color: #fff;
         border-radius: 5px;
         width: 100%;
+        overflow-x: auto;
 
         >table {
             width: 100%;
             align-items: center;
             border-collapse: separate;
+            overflow-x: auto;
 
             thead>tr {
                 color: #fff;

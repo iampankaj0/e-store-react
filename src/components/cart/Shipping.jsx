@@ -1,13 +1,77 @@
 import React from "react";
-import { Country, State } from "country-state-city";
+import { Country, State, City } from "country-state-city";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const Shipping = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [hNo, setHNo] = useState(
+    localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo")).hNo
+      : ""
+  );
+  const [city, setCity] = useState(
+    localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo")).city
+      : ""
+  );
+  const [country, setCountry] = useState(
+    localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo")).country
+      : ""
+  );
+  const [state, setState] = useState(
+    localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo")).state
+      : ""
+  );
+  const [pinCode, setPinCode] = useState(
+    localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo")).pinCode
+      : ""
+  );
+  const [phoneNo, setPhoneNo] = useState(
+    localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo")).phoneNo
+      : ""
+  );
+
   const submitHandler = (e) => {
     e.preventDefault();
 
-    navigate('/confirmorder');
+    if (hNo && city && country && state && pinCode && phoneNo) {
+      dispatch({
+        type: "ADD_SHIPPING_INFO",
+        payload: {
+          hNo,
+          city,
+          country,
+          state,
+          pinCode,
+          phoneNo,
+        },
+      });
+
+      localStorage.setItem(
+        "shippingInfo",
+        JSON.stringify({
+          hNo,
+          city,
+          country,
+          state,
+          pinCode,
+          phoneNo,
+        })
+      );
+
+      navigate("/confirmorder");
+    } else {
+      toast.warning("Please fill all fields");
+    }
   };
 
   return (
@@ -16,49 +80,85 @@ const Shipping = () => {
         <h1>Shipping Details</h1>
         <form>
           <div>
-            <label>H. No.</label>
-            <input type="text" placeholder="Enter House No." />
-          </div>
-          <div>
-            <label>City</label>
-            <input type="text" placeholder="Enter City" />
+            <label>Phone No.</label>
+            <input
+              type="number"
+              placeholder="Enter Phone No."
+              value={phoneNo}
+              onChange={(e) => setPhoneNo(e.target.value)}
+            />
           </div>
           <div>
             <label>Country</label>
-            <select>
+            <select
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            >
               <option value="">Select Country</option>
-              {Country &&
-                Country.getAllCountries().map((i) => {
+              {Country?.getAllCountries().map((i) => {
+                return (
+                  <option value={i.isoCode} key={i.isoCode}>
+                    {i.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {country && (
+            <div>
+              <label>State</label>
+              <select value={state} onChange={(e) => setState(e.target.value)}>
+                <option value="">Select State</option>
+                {State?.getStatesOfCountry(country).map((i) => {
                   return (
                     <option value={i.isoCode} key={i.isoCode}>
                       {i.name}
                     </option>
                   );
                 })}
-            </select>
-          </div>
-          <div>
-            <label>State</label>
-            <select>
-              <option value="">Select State</option>
-              {State &&
-                State.getStatesOfCountry(`IN`).map((i) => {
+              </select>
+            </div>
+          )}
+          {state && (
+            <div>
+              <label>City</label>
+              <select value={city} onChange={(e) => setCity(e.target.value)}>
+                <option value="">Select City</option>
+                {City?.getCitiesOfState(country, state).map((i) => {
                   return (
-                    <option value={i.isoCode} key={i.isoCode}>
+                    <option value={i.name} key={i.name}>
                       {i.name}
                     </option>
                   );
                 })}
-            </select>
-          </div>
-          <div>
-            <label>Pin Code</label>
-            <input type="number" placeholder="Enter Pin Code" />
-          </div>
-          <div>
-            <label>Phoner No.</label>
-            <input type="number" placeholder="Enter Phoner No." />
-          </div>
+              </select>
+            </div>
+          )}
+
+          {city && (
+            <div>
+              <label>Pin Code</label>
+              <input
+                type="number"
+                placeholder="Enter Pin Code"
+                value={pinCode}
+                onChange={(e) => setPinCode(e.target.value)}
+              />
+            </div>
+          )}
+
+          {pinCode && (
+            <div>
+              <label>H. No.</label>
+              <input
+                type="text"
+                placeholder="Enter House No."
+                value={hNo}
+                onChange={(e) => setHNo(e.target.value)}
+              />
+            </div>
+          )}
+
           <button onClick={submitHandler} type="submit">
             Confirm Order
           </button>
