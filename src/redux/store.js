@@ -33,6 +33,6 @@ const store = configureStore({
 
 export default store;
 
-export const server = "http://localhost:4000/api/v1";
+// export const server = "http://localhost:4000/api/v1";
 // export const server = "https://e-store-apis-448ts14pp-iampankaj0.vercel.app/api/v1";
-// export const server = "http://e-store-apis.vercel.app/api/v1";
+export const server = "https://e-store-api.vercel.app/api/v1";
